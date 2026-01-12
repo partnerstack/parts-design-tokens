@@ -275,17 +275,17 @@ import type { ButtonDesignTokens } from '@primeuix/themes/types/button';
                 help: {
                     color: "#ffffff",
                     focusRing: {
-                        color: "{lime.500}",
+                        color: "{pink.500}",
                         shadow: "0 0 0 0 #00000000"
                     },
-                    background: "{lime.500}",
+                    background: "{pink.500}",
                     hoverColor: "#ffffff",
                     activeColor: "#ffffff",
-                    borderColor: "{lime.500}",
-                    hoverBackground: "{lime.600}",
-                    activeBackground: "{lime.700}",
-                    hoverBorderColor: "{lime.600}",
-                    activeBorderColor: "{lime.700}"
+                    borderColor: "{pink.500}",
+                    hoverBackground: "{pink.600}",
+                    activeBackground: "{pink.700}",
+                    hoverBorderColor: "{pink.600}",
+                    activeBorderColor: "{pink.700}"
                 },
                 info: {
                     color: "#ffffff",
