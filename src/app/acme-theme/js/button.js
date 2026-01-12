@@ -273,17 +273,17 @@ export default {
                 help: {
                     color: "#ffffff",
                     focusRing: {
-                        color: "{pink.500}",
+                        color: "{lime.500}",
                         shadow: "0 0 0 0 #00000000"
                     },
-                    background: "{pink.500}",
+                    background: "{lime.500}",
                     hoverColor: "#ffffff",
                     activeColor: "#ffffff",
-                    borderColor: "{pink.500}",
-                    hoverBackground: "{pink.600}",
-                    activeBackground: "{pink.700}",
-                    hoverBorderColor: "{pink.600}",
-                    activeBorderColor: "{pink.700}"
+                    borderColor: "{lime.500}",
+                    hoverBackground: "{lime.600}",
+                    activeBackground: "{lime.700}",
+                    hoverBorderColor: "{lime.600}",
+                    activeBorderColor: "{lime.700}"
                 },
                 info: {
                     color: "#ffffff",
