@@ -12,6 +12,6 @@ import type { ProgressBarDesignTokens } from '@primeuix/themes/types/progressbar
         fontWeight: "600"
     },
     value: {
-        background: "{fuchsia.500}"
+        background: "{cyan.500}"
     }
 } satisfies ProgressBarDesignTokens;
