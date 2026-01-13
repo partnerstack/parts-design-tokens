@@ -1,0 +1,99 @@
+name: Sync JS Files to Kyoto
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/app/partsxprimevue/js/**"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-js-files:
+    name: Sync JS Files to Kyoto Repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Checkout destination repository
+        uses: actions/checkout@v4
+        with:
+          repository: partnerstack/kyoto
+          token: ${{ secrets.KYOTO_REPO_TOKEN }}
+          path: destination
+
+      - name: Copy JS files
+        run: |
+          # Create destination directory if it doesn't exist
+          mkdir -p destination/lib/primevue/partnerstack-primevue-theme-js
+          
+          # Copy all JS files from source to destination
+          cp -r source/src/app/partsxprimevue/js/* destination/lib/primevue/partnerstack-primevue-theme-js/
+          
+          # List copied files for verification
+          ls -la destination/lib/primevue/partnerstack-primevue-theme-js/
+
+      - name: Create branch and commit changes
+        run: |
+          cd destination
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are any changes
+          if [ -n "$(git status --porcelain)" ]; then
+            # Create a unique branch name using source commit SHA
+            SOURCE_SHA=$(cd ../source && git rev-parse --short HEAD)
+            BRANCH_NAME="sync-js-theme-files-${SOURCE_SHA}"
+            
+            # Create and checkout new branch
+            git checkout -b "$BRANCH_NAME"
+            
+            # Commit changes
+            git add lib/primevue/partnerstack-primevue-theme-js/
+            git commit -m "chore: sync JS theme files from parts-design-tokens
+            
+            Source commit: ${{ github.repository }}@${{ github.sha }}
+            Synced from: ${{ github.event.head_commit.message }}"
+            
+            # Push branch
+            git push -u origin "$BRANCH_NAME"
+            
+            # Export branch name for next step
+            echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          else
+            echo "No changes to commit"
+            echo "BRANCH_NAME=" >> $GITHUB_ENV
+          fi
+
+      - name: Create Pull Request
+        if: env.BRANCH_NAME != ''
+        env:
+          GH_TOKEN: ${{ secrets.KYOTO_REPO_TOKEN }}
+        run: |
+          cd destination
+          
+          # Check if PR already exists for this branch
+          PR_EXISTS=$(gh pr list --head "$BRANCH_NAME" --json number --jq 'length')
+          
+          if [ "$PR_EXISTS" -eq 0 ]; then
+            gh pr create \
+              --title "chore: sync JS theme files from parts-design-tokens" \
+              --body "This PR syncs JS theme files from \`parts-design-tokens\` repository.
+              
+            **Source:** ${{ github.repository }}@${{ github.sha }}
+            **Triggered by:** ${{ github.event.head_commit.message }}
+            
+            Files synced from: \`src/app/partsxprimevue/js/\`
+            To: \`lib/primevue/partnerstack-primevue-theme-js/\`" \
+              --base main \
+              --head "$BRANCH_NAME" \
+              --draft
+          else
+            echo "Pull request already exists for branch $BRANCH_NAME"
+          fi
