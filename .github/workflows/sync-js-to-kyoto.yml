@@ -1,11 +1,12 @@
 name: Sync JS Files to Kyoto
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Automated Figma To Theme Code"]
+    types:
+      - completed
     branches:
       - main
-    paths:
-      - "src/app/partsxprimevue/js/**"
 
 permissions:
   contents: write
@@ -15,10 +16,12 @@ jobs:
   sync-js-files:
     name: Sync JS Files to Kyoto Repository
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           path: source
 
       - name: Checkout destination repository
@@ -27,6 +30,50 @@ jobs:
           repository: partnerstack/kyoto
           token: ${{ secrets.KYOTO_REPO_TOKEN }}
           path: destination
+
+      - name: Check for existing PR
+        env:
+          GH_TOKEN: ${{ secrets.KYOTO_REPO_TOKEN }}
+        run: |
+          cd destination
+          
+          # Use a fixed branch name
+          BRANCH_NAME="sync-js-theme-files"
+          
+          # Check if an open PR exists for this branch
+          EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --state open --json number,headRefName --jq '.[0]')
+          
+          if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
+            PR_NUMBER=$(echo "$EXISTING_PR" | jq -r '.number')
+            echo "EXISTING_PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+            echo "BRANCH_EXISTS=true" >> $GITHUB_ENV
+            echo "Found existing open PR #$PR_NUMBER for branch $BRANCH_NAME"
+          else
+            echo "BRANCH_EXISTS=false" >> $GITHUB_ENV
+            echo "No existing open PR found for branch $BRANCH_NAME"
+          fi
+          
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Setup branch
+        run: |
+          cd destination
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          BRANCH_NAME="${{ env.BRANCH_NAME }}"
+          
+          # Check if branch already exists remotely
+          if [ "${{ env.BRANCH_EXISTS }}" == "true" ]; then
+            # Branch exists, checkout and update it
+            echo "Updating existing branch $BRANCH_NAME"
+            git fetch origin "$BRANCH_NAME"
+            git checkout -b "$BRANCH_NAME" "origin/$BRANCH_NAME" || git checkout "$BRANCH_NAME"
+          else
+            # Create new branch from main
+            echo "Creating new branch $BRANCH_NAME"
+            git checkout -b "$BRANCH_NAME"
+          fi
 
       - name: Copy JS files
         run: |
@@ -39,61 +86,45 @@ jobs:
           # List copied files for verification
           ls -la destination/lib/primevue/partnerstack-primevue-theme-js/
 
-      - name: Create branch and commit changes
+      - name: Commit and push changes
         run: |
           cd destination
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          BRANCH_NAME="${{ env.BRANCH_NAME }}"
           
           # Check if there are any changes
           if [ -n "$(git status --porcelain)" ]; then
-            # Create a unique branch name using source commit SHA
-            SOURCE_SHA=$(cd ../source && git rev-parse --short HEAD)
-            BRANCH_NAME="sync-js-theme-files-${SOURCE_SHA}"
-            
-            # Create and checkout new branch
-            git checkout -b "$BRANCH_NAME"
-            
             # Commit changes
             git add lib/primevue/partnerstack-primevue-theme-js/
             git commit -m "chore: sync JS theme files from parts-design-tokens
             
-            Source commit: ${{ github.repository }}@${{ github.sha }}
-            Synced from: ${{ github.event.head_commit.message }}"
+            Source commit: ${{ github.repository }}@${{ github.event.workflow_run.head_sha }}
+            Triggered by: Automated Figma To Theme Code workflow"
             
-            # Push branch
+            # Push branch (will update existing PR if it exists)
             git push -u origin "$BRANCH_NAME"
-            
-            # Export branch name for next step
-            echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
           else
             echo "No changes to commit"
-            echo "BRANCH_NAME=" >> $GITHUB_ENV
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
           fi
 
-      - name: Create Pull Request
-        if: env.BRANCH_NAME != ''
+      - name: Create Pull Request if needed
+        if: env.BRANCH_EXISTS == 'false' && env.HAS_CHANGES == 'true'
         env:
           GH_TOKEN: ${{ secrets.KYOTO_REPO_TOKEN }}
         run: |
           cd destination
           
-          # Check if PR already exists for this branch
-          PR_EXISTS=$(gh pr list --head "$BRANCH_NAME" --json number --jq 'length')
-          
-          if [ "$PR_EXISTS" -eq 0 ]; then
-            gh pr create \
-              --title "chore: sync JS theme files from parts-design-tokens" \
-              --body "This PR syncs JS theme files from \`parts-design-tokens\` repository.
-              
-            **Source:** ${{ github.repository }}@${{ github.sha }}
-            **Triggered by:** ${{ github.event.head_commit.message }}
+          gh pr create \
+            --title "chore: sync JS theme files from parts-design-tokens" \
+            --body "This PR syncs JS theme files from \`parts-design-tokens\` repository.
+            
+            **Source:** ${{ github.repository }}@${{ github.event.workflow_run.head_sha }}
+            **Triggered by:** Automated Figma To Theme Code workflow completion
             
             Files synced from: \`src/app/partsxprimevue/js/\`
             To: \`lib/primevue/partnerstack-primevue-theme-js/\`" \
-              --base main \
-              --head "$BRANCH_NAME" \
-              --draft
-          else
-            echo "Pull request already exists for branch $BRANCH_NAME"
-          fi
+            --base main \
+            --head "${{ env.BRANCH_NAME }}" \
+            --draft
