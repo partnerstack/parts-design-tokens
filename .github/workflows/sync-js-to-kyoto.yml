@@ -21,7 +21,7 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: main
           path: source
 
       - name: Checkout destination repository
@@ -94,11 +94,15 @@ jobs:
           
           # Check if there are any changes
           if [ -n "$(git status --porcelain)" ]; then
+            # Get the current commit SHA from source repository
+            SOURCE_SHA=$(cd ../source && git rev-parse HEAD)
+            SOURCE_SHA_SHORT=$(cd ../source && git rev-parse --short HEAD)
+            
             # Commit changes
             git add lib/primevue/partnerstack-primevue-theme-js/
             git commit -m "chore: sync JS theme files from parts-design-tokens
             
-            Source commit: ${{ github.repository }}@${{ github.event.workflow_run.head_sha }}
+            Source commit: ${{ github.repository }}@${SOURCE_SHA_SHORT}
             Triggered by: Automated Figma To Theme Code workflow"
             
             # Push branch (will update existing PR if it exists)
@@ -116,11 +120,14 @@ jobs:
         run: |
           cd destination
           
+          # Get the current commit SHA from source repository
+          SOURCE_SHA_SHORT=$(cd ../source && git rev-parse --short HEAD)
+          
           gh pr create \
             --title "chore: sync JS theme files from parts-design-tokens" \
             --body "This PR syncs JS theme files from \`parts-design-tokens\` repository.
             
-            **Source:** ${{ github.repository }}@${{ github.event.workflow_run.head_sha }}
+            **Source:** ${{ github.repository }}@${SOURCE_SHA_SHORT}
             **Triggered by:** Automated Figma To Theme Code workflow completion
             
             Files synced from: \`src/app/partsxprimevue/js/\`
