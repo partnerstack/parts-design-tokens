@@ -79,6 +79,9 @@ jobs:
         run: |
           # Create destination directory if it doesn't exist
           mkdir -p destination/lib/primevue/partnerstack-primevue-theme-js
+
+          # Make sure local files are up to date for the commit
+          git pull origin "$BRANCH_NAME"
           
           # Copy all JS files from source to destination
           cp -r source/src/app/partsxprimevue/js/* destination/lib/primevue/partnerstack-primevue-theme-js/
