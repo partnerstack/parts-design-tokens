@@ -10,6 +10,6 @@ export default {
         fontWeight: "600"
     },
     value: {
-        background: "{yellow.500}"
+        background: "{fuchsia.500}"
     }
 }
