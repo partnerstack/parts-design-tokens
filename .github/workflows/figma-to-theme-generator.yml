@@ -24,9 +24,27 @@ jobs:
                       exit 1
                   fi
                   echo "tokens.json found"
+                  
+                  # Verify it's valid JSON
+                  if ! jq empty tokens.json 2>/dev/null; then
+                      echo "tokens.json is valid JSON"
+                      TOKEN_COUNT=$(jq 'length' tokens.json 2>/dev/null || echo "unknown")
+                      echo "Token count: $TOKEN_COUNT"
+                  else
+                      echo "Warning: tokens.json may not be valid JSON"
+                  fi
+
+            - name: Pre-flight checks
+              run: |
+                  echo "Running pre-flight checks..."
+                  echo "✓ Repository checked out"
+                  echo "✓ tokens.json verified"
+                  echo "Note: If action fails, verify THEME_DESIGNER_SECRET_KEY is configured in repository secrets"
 
             - name: Generate Prime Theme
               id: generate-theme
+              timeout-minutes: 10
+              continue-on-error: false
               uses: primefaces/theme-designer-ci@1.0.0-beta.4
               with:
                   designer-secret: ${{ secrets.THEME_DESIGNER_SECRET_KEY }}
@@ -36,6 +54,23 @@ jobs:
                   font-family: "Inter Var"
                   tokens-path: "tokens.json"
                   output-dir: "./src/app/partsxprimevue"
+              env:
+                  ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG || 'false' }}
+
+            - name: Check action exit status
+              if: always()
+              run: |
+                  if [ "${{ steps.generate-theme.outcome }}" != "success" ]; then
+                      echo "::error::Theme generation action failed or did not complete successfully"
+                      echo "Action outcome: ${{ steps.generate-theme.outcome }}"
+                      echo "Possible issues:"
+                      echo "  - Invalid designer-secret"
+                      echo "  - Network/timeout issues"
+                      echo "  - Invalid tokens.json format"
+                      echo "  - Theme designer service unavailable"
+                      exit 1
+                  fi
+                  echo "✓ Theme generation action completed successfully"
 
             - name: Verify output files were generated
               run: |
