@@ -48,12 +48,12 @@ jobs:
               uses: primefaces/theme-designer-ci@1.0.0-beta.4
               with:
                   designer-secret: ${{ secrets.THEME_DESIGNER_SECRET_KEY }}
-                  theme-name: "Parts X primevue"
+                  theme-name: "testingworkflow"
                   project: "primevue"
                   font-size: "14px"
                   font-family: "Inter Var"
                   tokens-path: "tokens.json"
-                  output-dir: "./src/app/partsxprimevue"
+                  output-dir: "./src/app/testingworkflow"
               env:
                   ACTIONS_STEP_DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG || 'false' }}
 
@@ -74,19 +74,19 @@ jobs:
 
             - name: Verify output files were generated
               run: |
-                  if [ ! -d "./src/app/partsxprimevue" ]; then
+                  if [ ! -d "./src/app/testingworkflow" ]; then
                       echo "Error: Output directory does not exist"
                       exit 1
                   fi
                   
-                  if [ ! -d "./src/app/partsxprimevue/js" ] && [ ! -d "./src/app/partsxprimevue/ts" ]; then
+                  if [ ! -d "./src/app/testingworkflow/js" ] && [ ! -d "./src/app/testingworkflow/ts" ]; then
                       echo "Error: No JS or TS files were generated"
                       exit 1
                   fi
                   
                   # Check if at least some files exist
-                  JS_COUNT=$(find ./src/app/partsxprimevue/js -name "*.js" 2>/dev/null | wc -l || echo "0")
-                  TS_COUNT=$(find ./src/app/partsxprimevue/ts -name "*.ts" 2>/dev/null | wc -l || echo "0")
+                  JS_COUNT=$(find ./src/app/testingworkflow/js -name "*.js" 2>/dev/null | wc -l || echo "0")
+                  TS_COUNT=$(find ./src/app/testingworkflow/ts -name "*.ts" 2>/dev/null | wc -l || echo "0")
                   
                   if [ "$JS_COUNT" -eq 0 ] && [ "$TS_COUNT" -eq 0 ]; then
                       echo "Error: No theme files were generated (found 0 JS and 0 TS files)"
