@@ -17,7 +17,16 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
 
+            - name: Verify tokens.json exists
+              run: |
+                  if [ ! -f "tokens.json" ]; then
+                      echo "Error: tokens.json file not found"
+                      exit 1
+                  fi
+                  echo "tokens.json found"
+
             - name: Generate Prime Theme
+              id: generate-theme
               uses: primefaces/theme-designer-ci@1.0.0-beta.4
               with:
                   designer-secret: ${{ secrets.THEME_DESIGNER_SECRET_KEY }}
@@ -27,3 +36,26 @@ jobs:
                   font-family: "Inter Var"
                   tokens-path: "tokens.json"
                   output-dir: "./src/app/partsxprimevue"
+
+            - name: Verify output files were generated
+              run: |
+                  if [ ! -d "./src/app/partsxprimevue" ]; then
+                      echo "Error: Output directory does not exist"
+                      exit 1
+                  fi
+                  
+                  if [ ! -d "./src/app/partsxprimevue/js" ] && [ ! -d "./src/app/partsxprimevue/ts" ]; then
+                      echo "Error: No JS or TS files were generated"
+                      exit 1
+                  fi
+                  
+                  # Check if at least some files exist
+                  JS_COUNT=$(find ./src/app/partsxprimevue/js -name "*.js" 2>/dev/null | wc -l || echo "0")
+                  TS_COUNT=$(find ./src/app/partsxprimevue/ts -name "*.ts" 2>/dev/null | wc -l || echo "0")
+                  
+                  if [ "$JS_COUNT" -eq 0 ] && [ "$TS_COUNT" -eq 0 ]; then
+                      echo "Error: No theme files were generated (found 0 JS and 0 TS files)"
+                      exit 1
+                  fi
+                  
+                  echo "Successfully generated $JS_COUNT JS files and $TS_COUNT TS files"
