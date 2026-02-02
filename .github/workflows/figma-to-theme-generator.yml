@@ -15,15 +15,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Generate Prime Theme
               uses: primefaces/theme-designer-ci@1.0.0-beta.4
               with:
                   designer-secret: ${{ secrets.THEME_DESIGNER_SECRET_KEY }}
-                  theme-name: "acme"
+                  theme-name: "parts-from-token-studio"
                   project: "primevue"
                   font-size: "14px"
                   font-family: "Inter Var"
                   tokens-path: "tokens.json"
-                  output-dir: "./acme-theme"
+                  output-dir: "./parts-from-token-studio-theme"
