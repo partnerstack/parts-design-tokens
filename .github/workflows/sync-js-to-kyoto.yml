@@ -1,241 +1,241 @@
-# name: Sync JS Files to Kyoto
+name: Sync JS Files to Kyoto
 
-# on:
-#   workflow_run:
-#     workflows: ["Automated Figma To Theme Code"]
-#     types:
-#       - completed
-#     branches:
-#       - main
+on:
+  workflow_run:
+    workflows: ["Automated Figma To Theme Code"]
+    types:
+      - completed
+    branches:
+      - main
 
-# permissions:
-#   contents: write
-#   pull-requests: write
+permissions:
+  contents: write
+  pull-requests: write
 
-# jobs:
-#   sync-js-files:
-#     name: Sync JS Files to Kyoto Repository
-#     runs-on: ubuntu-latest
-#     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-#     steps:
-#       - name: Checkout source repository
-#         uses: actions/checkout@v4
-#         with:
-#           ref: main
-#           path: source
+jobs:
+  sync-js-files:
+    name: Sync JS Files to Kyoto Repository
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: source
 
-#       - name: Checkout destination repository
-#         uses: actions/checkout@v4
-#         with:
-#           repository: partnerstack/kyoto
-#           token: ${{ secrets.KYOTO_REPO_TOKEN }}
-#           path: destination
+      - name: Checkout destination repository
+        uses: actions/checkout@v4
+        with:
+          repository: partnerstack/kyoto
+          token: ${{ secrets.KYOTO_REPO_TOKEN }}
+          path: destination
 
-#       - name: Check for existing PR
-#         env:
-#           GH_TOKEN: ${{ secrets.KYOTO_REPO_TOKEN }}
-#         run: |
-#           cd destination
+      - name: Check for existing PR
+        env:
+          GH_TOKEN: ${{ secrets.KYOTO_REPO_TOKEN }}
+        run: |
+          cd destination
           
-#           # Use a fixed branch name
-#           BRANCH_NAME="sync-js-theme-files"
+          # Use a fixed branch name
+          BRANCH_NAME="sync-js-theme-files"
           
-#           # Check if an open PR exists for this branch
-#           EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --state open --json number,headRefName --jq '.[0]')
+          # Check if an open PR exists for this branch
+          EXISTING_PR=$(gh pr list --head "$BRANCH_NAME" --state open --json number,headRefName --jq '.[0]')
           
-#           if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
-#             PR_NUMBER=$(echo "$EXISTING_PR" | jq -r '.number')
-#             echo "EXISTING_PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-#             echo "BRANCH_EXISTS=true" >> $GITHUB_ENV
-#             echo "Found existing open PR #$PR_NUMBER for branch $BRANCH_NAME"
-#           else
-#             echo "BRANCH_EXISTS=false" >> $GITHUB_ENV
-#             echo "No existing open PR found for branch $BRANCH_NAME"
-#           fi
+          if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
+            PR_NUMBER=$(echo "$EXISTING_PR" | jq -r '.number')
+            echo "EXISTING_PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+            echo "BRANCH_EXISTS=true" >> $GITHUB_ENV
+            echo "Found existing open PR #$PR_NUMBER for branch $BRANCH_NAME"
+          else
+            echo "BRANCH_EXISTS=false" >> $GITHUB_ENV
+            echo "No existing open PR found for branch $BRANCH_NAME"
+          fi
           
-#           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
-#       - name: Setup branch
-#         run: |
-#           cd destination
-#           git config user.name "github-actions[bot]"
-#           git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Setup branch
+        run: |
+          cd destination
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           
-#           BRANCH_NAME="${{ env.BRANCH_NAME }}"
+          BRANCH_NAME="${{ env.BRANCH_NAME }}"
           
-#           # Check if branch already exists remotely
-#           if [ "${{ env.BRANCH_EXISTS }}" == "true" ]; then
-#             # Branch exists, checkout and update it
-#             echo "Updating existing branch $BRANCH_NAME"
-#             git fetch origin "$BRANCH_NAME"
-#             git checkout -b "$BRANCH_NAME" "origin/$BRANCH_NAME" || git checkout "$BRANCH_NAME"
-#           else
-#             # Create new branch from main
-#             echo "Creating new branch $BRANCH_NAME"
-#             git checkout -b "$BRANCH_NAME"
-#           fi
+          # Check if branch already exists remotely
+          if [ "${{ env.BRANCH_EXISTS }}" == "true" ]; then
+            # Branch exists, checkout and update it
+            echo "Updating existing branch $BRANCH_NAME"
+            git fetch origin "$BRANCH_NAME"
+            git checkout -b "$BRANCH_NAME" "origin/$BRANCH_NAME" || git checkout "$BRANCH_NAME"
+          else
+            # Create new branch from main
+            echo "Creating new branch $BRANCH_NAME"
+            git checkout -b "$BRANCH_NAME"
+          fi
 
-#       - name: Identify changed JS files
-#         id: changed-files
-#         run: |
-#           cd source
+      - name: Identify changed JS files
+        id: changed-files
+        run: |
+          cd source
           
-#           # Fetch all branches to ensure we have full history
-#           git fetch --all --quiet
+          # Fetch all branches to ensure we have full history
+          git fetch --all --quiet
           
-#           # Get the current commit SHA
-#           CURRENT_SHA=$(git rev-parse HEAD)
+          # Get the current commit SHA
+          CURRENT_SHA=$(git rev-parse HEAD)
           
-#           # Try to get the previous commit SHA (the one before the current)
-#           PREVIOUS_SHA=$(git rev-parse HEAD~1 2>/dev/null || echo "")
+          # Try to get the previous commit SHA (the one before the current)
+          PREVIOUS_SHA=$(git rev-parse HEAD~1 2>/dev/null || echo "")
           
-#           # If we can't get previous commit, try to find the last commit that modified tokens.json
-#           if [ -z "$PREVIOUS_SHA" ]; then
-#             # Find the last commit that changed tokens.json (which triggers the theme generator)
-#             PREVIOUS_SHA=$(git log --all --oneline --format="%H" -1 --skip=1 -- "tokens.json" 2>/dev/null || echo "")
-#           fi
+          # If we can't get previous commit, try to find the last commit that modified tokens.json
+          if [ -z "$PREVIOUS_SHA" ]; then
+            # Find the last commit that changed tokens.json (which triggers the theme generator)
+            PREVIOUS_SHA=$(git log --all --oneline --format="%H" -1 --skip=1 -- "tokens.json" 2>/dev/null || echo "")
+          fi
           
-#           # If still no previous SHA, compare to origin/main
-#           if [ -z "$PREVIOUS_SHA" ]; then
-#             PREVIOUS_SHA=$(git rev-parse origin/main 2>/dev/null || echo "")
-#           fi
+          # If still no previous SHA, compare to origin/main
+          if [ -z "$PREVIOUS_SHA" ]; then
+            PREVIOUS_SHA=$(git rev-parse origin/main 2>/dev/null || echo "")
+          fi
           
-#           # Get list of changed JS files (Added, Copied, Modified, Renamed)
-#           if [ -n "$PREVIOUS_SHA" ] && [ "$PREVIOUS_SHA" != "$CURRENT_SHA" ]; then
-#             CHANGED_FILES=$(git diff --name-only --diff-filter=ACMR "$PREVIOUS_SHA" HEAD -- "src/app/partsxprimevue/js/*.js" 2>/dev/null || echo "")
-#           else
-#             # If no previous commit to compare, check all files (first run scenario)
-#             CHANGED_FILES=$(find src/app/partsxprimevue/js -name "*.js" -type f 2>/dev/null | sed 's|^\./||' || echo "")
-#           fi
+          # Get list of changed JS files (Added, Copied, Modified, Renamed)
+          if [ -n "$PREVIOUS_SHA" ] && [ "$PREVIOUS_SHA" != "$CURRENT_SHA" ]; then
+            CHANGED_FILES=$(git diff --name-only --diff-filter=ACMR "$PREVIOUS_SHA" HEAD -- "src/app/partsxprimevue/js/*.js" 2>/dev/null || echo "")
+          else
+            # If no previous commit to compare, check all files (first run scenario)
+            CHANGED_FILES=$(find src/app/partsxprimevue/js -name "*.js" -type f 2>/dev/null | sed 's|^\./||' || echo "")
+          fi
           
-#           # Convert to array and create a list of relative paths
-#           if [ -n "$CHANGED_FILES" ]; then
-#             echo "CHANGED_FILES<<EOF" >> $GITHUB_OUTPUT
-#             echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
-#             echo "EOF" >> $GITHUB_OUTPUT
+          # Convert to array and create a list of relative paths
+          if [ -n "$CHANGED_FILES" ]; then
+            echo "CHANGED_FILES<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGED_FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
             
-#             # Count changed files (handle both single line and multi-line)
-#             FILE_COUNT=$(echo "$CHANGED_FILES" | grep -c "\.js$" || echo "$(echo "$CHANGED_FILES" | wc -l | tr -d ' ')")
-#             echo "FILE_COUNT=$FILE_COUNT" >> $GITHUB_OUTPUT
+            # Count changed files (handle both single line and multi-line)
+            FILE_COUNT=$(echo "$CHANGED_FILES" | grep -c "\.js$" || echo "$(echo "$CHANGED_FILES" | wc -l | tr -d ' ')")
+            echo "FILE_COUNT=$FILE_COUNT" >> $GITHUB_OUTPUT
             
-#             echo "Comparing $PREVIOUS_SHA to $CURRENT_SHA"
-#             echo "Found $FILE_COUNT changed JS file(s):"
-#             echo "$CHANGED_FILES"
-#           else
-#             echo "CHANGED_FILES=" >> $GITHUB_OUTPUT
-#             echo "FILE_COUNT=0" >> $GITHUB_OUTPUT
-#             echo "No changed JS files found"
-#           fi
+            echo "Comparing $PREVIOUS_SHA to $CURRENT_SHA"
+            echo "Found $FILE_COUNT changed JS file(s):"
+            echo "$CHANGED_FILES"
+          else
+            echo "CHANGED_FILES=" >> $GITHUB_OUTPUT
+            echo "FILE_COUNT=0" >> $GITHUB_OUTPUT
+            echo "No changed JS files found"
+          fi
 
-#       - name: Copy changed JS files
-#         id: copy-files
-#         run: |
-#           # Create destination directory if it doesn't exist
-#           mkdir -p destination/lib/primevue/partnerstack-primevue-theme-js
+      - name: Copy changed JS files
+        id: copy-files
+        run: |
+          # Create destination directory if it doesn't exist
+          mkdir -p destination/lib/primevue/partnerstack-primevue-theme-js
           
-#           CHANGED_FILES="${{ steps.changed-files.outputs.CHANGED_FILES }}"
+          CHANGED_FILES="${{ steps.changed-files.outputs.CHANGED_FILES }}"
           
-#           if [ -z "$CHANGED_FILES" ] || [ "${{ steps.changed-files.outputs.FILE_COUNT }}" == "0" ]; then
-#             echo "No changed JS files to copy"
-#             echo "COPIED_FILES=" >> $GITHUB_OUTPUT
-#             exit 0
-#           fi
+          if [ -z "$CHANGED_FILES" ] || [ "${{ steps.changed-files.outputs.FILE_COUNT }}" == "0" ]; then
+            echo "No changed JS files to copy"
+            echo "COPIED_FILES=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
           
-#           # Process files and store list of copied filenames
-#           COPIED_FILENAMES=""
+          # Process files and store list of copied filenames
+          COPIED_FILENAMES=""
           
-#           # Use process substitution to avoid subshell issues
-#           while IFS= read -r file || [ -n "$file" ]; do
-#             if [ -n "$file" ] && [ -f "source/$file" ]; then
-#               # Get just the filename
-#               filename=$(basename "$file")
-#               echo "Copying $file to destination..."
-#               cp "source/$file" "destination/lib/primevue/partnerstack-primevue-theme-js/$filename"
-#               if [ -z "$COPIED_FILENAMES" ]; then
-#                 COPIED_FILENAMES="$filename"
-#               else
-#                 COPIED_FILENAMES="$COPIED_FILENAMES $filename"
-#               fi
-#             fi
-#           done <<< "$CHANGED_FILES"
+          # Use process substitution to avoid subshell issues
+          while IFS= read -r file || [ -n "$file" ]; do
+            if [ -n "$file" ] && [ -f "source/$file" ]; then
+              # Get just the filename
+              filename=$(basename "$file")
+              echo "Copying $file to destination..."
+              cp "source/$file" "destination/lib/primevue/partnerstack-primevue-theme-js/$filename"
+              if [ -z "$COPIED_FILENAMES" ]; then
+                COPIED_FILENAMES="$filename"
+              else
+                COPIED_FILENAMES="$COPIED_FILENAMES $filename"
+              fi
+            fi
+          done <<< "$CHANGED_FILES"
           
-#           # Store copied filenames for next step
-#           echo "COPIED_FILES<<EOF" >> $GITHUB_OUTPUT
-#           echo "$COPIED_FILENAMES" >> $GITHUB_OUTPUT
-#           echo "EOF" >> $GITHUB_OUTPUT
+          # Store copied filenames for next step
+          echo "COPIED_FILES<<EOF" >> $GITHUB_OUTPUT
+          echo "$COPIED_FILENAMES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
           
-#           # List copied files for verification
-#           echo "Copied files:"
-#           ls -la destination/lib/primevue/partnerstack-primevue-theme-js/
+          # List copied files for verification
+          echo "Copied files:"
+          ls -la destination/lib/primevue/partnerstack-primevue-theme-js/
 
-#       - name: Commit and push changes
-#         run: |
-#           cd destination
+      - name: Commit and push changes
+        run: |
+          cd destination
           
-#           BRANCH_NAME="${{ env.BRANCH_NAME }}"
-#           COPIED_FILES="${{ steps.copy-files.outputs.COPIED_FILES }}"
+          BRANCH_NAME="${{ env.BRANCH_NAME }}"
+          COPIED_FILES="${{ steps.copy-files.outputs.COPIED_FILES }}"
           
-#           # Only stage the specific files that were copied
-#           if [ -n "$COPIED_FILES" ] && [ "${{ steps.changed-files.outputs.FILE_COUNT }}" != "0" ]; then
-#             # Stage only the changed files
-#             for filename in $COPIED_FILES; do
-#               filepath="lib/primevue/partnerstack-primevue-theme-js/$filename"
-#               if [ -f "$filepath" ]; then
-#                 git add "$filepath"
-#                 echo "Staged: $filepath"
-#               fi
-#             done
-#           fi
+          # Only stage the specific files that were copied
+          if [ -n "$COPIED_FILES" ] && [ "${{ steps.changed-files.outputs.FILE_COUNT }}" != "0" ]; then
+            # Stage only the changed files
+            for filename in $COPIED_FILES; do
+              filepath="lib/primevue/partnerstack-primevue-theme-js/$filename"
+              if [ -f "$filepath" ]; then
+                git add "$filepath"
+                echo "Staged: $filepath"
+              fi
+            done
+          fi
           
-#           # Check if there are any staged changes
-#           if [ -n "$(git diff --cached --name-only)" ]; then
-#             # Get the current commit SHA from source repository
-#             SOURCE_SHA=$(cd ../source && git rev-parse HEAD)
-#             SOURCE_SHA_SHORT=$(cd ../source && git rev-parse --short HEAD)
+          # Check if there are any staged changes
+          if [ -n "$(git diff --cached --name-only)" ]; then
+            # Get the current commit SHA from source repository
+            SOURCE_SHA=$(cd ../source && git rev-parse HEAD)
+            SOURCE_SHA_SHORT=$(cd ../source && git rev-parse --short HEAD)
             
-#             # Get list of changed filenames for commit message
-#             CHANGED_FILENAMES=$(echo "$COPIED_FILES" | tr ' ' ', ')
+            # Get list of changed filenames for commit message
+            CHANGED_FILENAMES=$(echo "$COPIED_FILES" | tr ' ' ', ')
             
-#             # Commit changes
-#             git commit -m "chore: sync JS theme files from parts-design-tokens
+            # Commit changes
+            git commit -m "chore: sync JS theme files from parts-design-tokens
             
-#             Source commit: ${{ github.repository }}@${SOURCE_SHA_SHORT}
-#             Triggered by: Automated Figma To Theme Code workflow
-#             Files updated: ${CHANGED_FILENAMES}"
+            Source commit: ${{ github.repository }}@${SOURCE_SHA_SHORT}
+            Triggered by: Automated Figma To Theme Code workflow
+            Files updated: ${CHANGED_FILENAMES}"
             
-#             # Push branch (will update existing PR if it exists)
-#             git push -u origin "$BRANCH_NAME"
-#             echo "HAS_CHANGES=true" >> $GITHUB_ENV
-#           else
-#             echo "No changes to commit"
-#             echo "HAS_CHANGES=false" >> $GITHUB_ENV
-#           fi
+            # Push branch (will update existing PR if it exists)
+            git push -u origin "$BRANCH_NAME"
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          else
+            echo "No changes to commit"
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          fi
 
-#       - name: Create Pull Request if needed
-#         if: env.BRANCH_EXISTS == 'false' && env.HAS_CHANGES == 'true'
-#         env:
-#           GH_TOKEN: ${{ secrets.KYOTO_REPO_TOKEN }}
-#         run: |
-#           cd destination
+      - name: Create Pull Request if needed
+        if: env.BRANCH_EXISTS == 'false' && env.HAS_CHANGES == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.KYOTO_REPO_TOKEN }}
+        run: |
+          cd destination
           
-#           # Get the current commit SHA from source repository
-#           SOURCE_SHA_SHORT=$(cd ../source && git rev-parse --short HEAD)
+          # Get the current commit SHA from source repository
+          SOURCE_SHA_SHORT=$(cd ../source && git rev-parse --short HEAD)
           
-#           # Get list of changed files for PR description
-#           COPIED_FILES="${{ steps.copy-files.outputs.COPIED_FILES }}"
-#           FILES_LIST=$(echo "$COPIED_FILES" | sed 's/ /, /g')
+          # Get list of changed files for PR description
+          COPIED_FILES="${{ steps.copy-files.outputs.COPIED_FILES }}"
+          FILES_LIST=$(echo "$COPIED_FILES" | sed 's/ /, /g')
           
-#           gh pr create \
-#             --title "chore: sync JS theme files from parts-design-tokens" \
-#             --body "This PR syncs JS theme files from \`parts-design-tokens\` repository.
+          gh pr create \
+            --title "chore: sync JS theme files from parts-design-tokens" \
+            --body "This PR syncs JS theme files from \`parts-design-tokens\` repository.
             
-#             **Source:** ${{ github.repository }}@${SOURCE_SHA_SHORT}
-#             **Triggered by:** Automated Figma To Theme Code workflow completion
+            **Source:** ${{ github.repository }}@${SOURCE_SHA_SHORT}
+            **Triggered by:** Automated Figma To Theme Code workflow completion
             
-#             **Files updated:** ${FILES_LIST}
+            **Files updated:** ${FILES_LIST}
             
-#             Files synced from: \`src/app/partsxprimevue/js/\`
-#             To: \`lib/primevue/partnerstack-primevue-theme-js/\`" \
-#             --base main \
-#             --head "${{ env.BRANCH_NAME }}" \
-#             --draft
+            Files synced from: \`src/app/partsxprimevue/js/\`
+            To: \`lib/primevue/partnerstack-primevue-theme-js/\`" \
+            --base main \
+            --head "${{ env.BRANCH_NAME }}" \
+            --draft
