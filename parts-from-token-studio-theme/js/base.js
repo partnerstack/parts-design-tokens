@@ -610,7 +610,7 @@ export default {
                     filledBackground: "{surface.0}",
                     focusBorderColor: "{primary.color}",
                     hoverBorderColor: "{surface.800}",
-                    placeholderColor: "{neutral.400}",
+                    placeholderColor: "{surface.500}",
                     disabledBackground: "{surface.100}",
                     invalidBorderColor: "{red.400}",
                     floatLabelFocusColor: "{primary.600}",
