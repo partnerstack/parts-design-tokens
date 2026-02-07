@@ -7,7 +7,7 @@ export default {
             iconOnlyWidth: "3rem"
         },
         sm: {
-            fontSize: "0.875rem",
+            fontSize: "0.75rem",
             paddingX: "0.625rem",
             paddingY: "0.375rem",
             iconOnlyWidth: "2rem"
