@@ -376,18 +376,18 @@ export default {
                     activeBorderColor: "{surface.800}"
                 },
                 secondary: {
-                    color: "{surface.600}",
+                    color: "{surface.700}",
                     focusRing: {
                         color: "{surface.600}",
                         shadow: "0 0 0 0 #00000000"
                     },
-                    background: "{surface.100}",
+                    background: "{surface.0}",
                     hoverColor: "{surface.700}",
-                    activeColor: "{surface.800}",
-                    borderColor: "{surface.100}",
-                    hoverBackground: "{surface.200}",
-                    activeBackground: "{surface.300}",
-                    hoverBorderColor: "{surface.200}",
+                    activeColor: "{surface.700}",
+                    borderColor: "{surface.300}",
+                    hoverBackground: "{surface.100}",
+                    activeBackground: "{surface.200}",
+                    hoverBorderColor: "{surface.300}",
                     activeBorderColor: "{surface.300}"
                 }
             },
@@ -459,9 +459,9 @@ export default {
                 },
                 plain: {
                     color: "{surface.700}",
-                    borderColor: "{surface.200}",
-                    hoverBackground: "{surface.50}",
-                    activeBackground: "{surface.100}"
+                    borderColor: "{surface.300}",
+                    hoverBackground: "{surface.100}",
+                    activeBackground: "{surface.200}"
                 },
                 danger: {
                     color: "{red.500}",
@@ -488,10 +488,10 @@ export default {
                     activeBackground: "{surface.100}"
                 },
                 secondary: {
-                    color: "{surface.500}",
-                    borderColor: "{surface.200}",
-                    hoverBackground: "{surface.50}",
-                    activeBackground: "{surface.100}"
+                    color: "{surface.700}",
+                    borderColor: "{surface.300}",
+                    hoverBackground: "{surface.100}",
+                    activeBackground: "{surface.200}"
                 }
             }
         }
