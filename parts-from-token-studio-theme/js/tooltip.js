@@ -3,7 +3,7 @@ export default {
         gutter: "0.25rem",
         shadow: "{overlay.popover.shadow}",
         padding: "0.5rem 0.75rem",
-        maxWidth: "12.5rem",
+        maxWidth: "16rem",
         borderRadius: "{overlay.popover.border.radius}"
     },
     colorScheme: {
