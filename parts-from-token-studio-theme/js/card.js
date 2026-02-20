@@ -1,7 +1,7 @@
 export default {
     body: {
         gap: "0.5rem",
-        padding: "24px"
+        padding: "1.5rem"
     },
     root: {
         color: "{content.color}",
