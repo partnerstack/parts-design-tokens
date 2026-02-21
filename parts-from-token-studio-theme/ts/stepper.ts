@@ -38,16 +38,16 @@ import type { StepperDesignTokens } from '@primeuix/themes/types/stepper';
         borderRadius: "{content.border.radius}"
     },
     stepNumber: {
-        size: "2rem",
-        color: "{text.muted.color}",
-        shadow: "0 0.5px 0 0 rgba(0, 0, 0, 0.06),0 1px 1px 0 rgba(0, 0, 0, 0.12)",
-        fontSize: "1.143rem",
-        background: "{primary.color}",
+        size: ".5rem",
+        color: "{surface.500}",
+        shadow: "0 0 0 0 rgba(0, 0, 0, 0)",
+        fontSize: "2px",
+        background: "{surface.500}",
         fontWeight: "500",
-        activeColor: "#fff",
-        borderColor: "{content.border.color}",
+        activeColor: "{primary.color}",
+        borderColor: "{surface.500}",
         borderRadius: "50%",
-        activeBackground: "{content.background}",
+        activeBackground: "{primary.color}",
         activeBorderColor: "{primary.color}"
     },
     steppanels: {
