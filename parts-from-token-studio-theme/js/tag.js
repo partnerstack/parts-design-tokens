@@ -1,11 +1,11 @@
 export default {
     icon: {
-        size: "12px"
+        size: "10px"
     },
     root: {
         gap: "4px",
         padding: "4px 8px",
-        fontSize: "14px",
+        fontSize: "12px",
         fontWeight: "700",
         borderRadius: "{content.border.radius}",
         roundedBorderRadius: "{border.radius.xl}"

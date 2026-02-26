@@ -5,12 +5,12 @@ import type { InputTextDesignTokens } from '@primeuix/themes/types/inputtext';
         lg: {
             fontSize: "1px rem",
             paddingX: "{form.field.lg.padding.x}",
-            paddingY: "{form.field.lg.padding.x}"
+            paddingY: "{form.field.lg.padding.y}"
         },
         sm: {
             fontSize: "0.875rem",
             paddingX: "{form.field.sm.padding.x}",
-            paddingY: "{form.field.sm.padding.x}"
+            paddingY: "{form.field.sm.padding.y}"
         },
         color: "{form.field.color}",
         shadow: "{form.field.shadow}",
