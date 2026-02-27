@@ -12,13 +12,13 @@ export default {
     },
     footer: {
         gap: "0.5rem",
-        padding: "0 {overlay.modal.padding} {overlay.modal.padding} {overlay.modal.padding}"
+        padding: "0 {overlay.modal.padding} 20px {overlay.modal.padding}"
     },
     header: {
         gap: "0.5rem",
-        padding: "{overlay.modal.padding}"
+        padding: "20px 20px 16px {overlay.modal.padding}"
     },
     content: {
-        padding: "0 {overlay.modal.padding} {overlay.modal.padding} {overlay.modal.padding}"
+        padding: "0 {overlay.modal.padding} 20px {overlay.modal.padding}"
     }
 }

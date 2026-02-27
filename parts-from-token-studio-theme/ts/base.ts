@@ -566,17 +566,17 @@ export default {
                 modal: {
                     color: "{text.color}",
                     background: "{surface.0}",
-                    borderColor: "{surface.100}"
+                    borderColor: "{surface.200}"
                 },
                 select: {
                     color: "{text.color}",
                     background: "{surface.0}",
-                    borderColor: "{surface.100}"
+                    borderColor: "{surface.200}"
                 },
                 popover: {
                     color: "{text.color}",
                     background: "{surface.0}",
-                    borderColor: "{surface.100}"
+                    borderColor: "{surface.200}"
                 }
             },
             primary: {
