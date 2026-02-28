@@ -20,7 +20,7 @@ export default {
             offset: "{focus.ring.offset}",
             shadow: "{focus.ring.shadow}"
         },
-        fontWeight: "600",
+        fontWeight: "500",
         borderRadius: "{content.border.radius}",
         disabledColor: "{form.field.disabled.color}",
         disabledBackground: "{form.field.disabled.background}",
@@ -35,7 +35,7 @@ export default {
         sm: {
             padding: "0.25rem 0.75rem"
         },
-        padding: "8px 16px",
+        padding: "0.25rem 0.75rem",
         borderRadius: "{content.border.radius}",
         checkedShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.02),0 1px 2px 0 rgba(0, 0, 0, 0.04)"
     },
@@ -64,20 +64,20 @@ export default {
             icon: {
                 color: "{surface.500}",
                 hoverColor: "{surface.700}",
-                checkedColor: "{primary.color}"
+                checkedColor: "{text.color}"
             },
             root: {
                 color: "{surface.700}",
-                background: "{surface.0}",
+                background: "{surface.100}",
                 hoverColor: "{surface.700}",
-                borderColor: "none",
-                checkedColor: "{primary.color}",
-                hoverBackground: "{surface.50}",
-                checkedBackground: "{surface.0}",
-                checkedBorderColor: "{surface.0}"
+                borderColor: "{surface.100}",
+                checkedColor: "{text.color}",
+                hoverBackground: "{surface.100}",
+                checkedBackground: "{surface.100}",
+                checkedBorderColor: "{surface.100}"
             },
             content: {
-                checkedBackground: "{primary.75}"
+                checkedBackground: "{surface.0}"
             }
         }
     }
