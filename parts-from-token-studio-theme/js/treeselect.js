@@ -51,7 +51,7 @@ export default {
     },
     dropdown: {
         color: "{form.field.icon.color}",
-        width: "2.5rem"
+        width: "36px"
     },
     clearIcon: {
         color: "{form.field.icon.color}"
