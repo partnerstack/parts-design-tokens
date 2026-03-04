@@ -366,7 +366,7 @@ export default {
             },
             sm: {
                 fontSize: "12px",
-                paddingX: "8px",
+                paddingX: "10px",
                 paddingY: "6px"
             },
             paddingX: "0.75rem",
