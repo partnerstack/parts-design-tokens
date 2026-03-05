@@ -79,7 +79,7 @@ import type { ToggleButtonDesignTokens } from '@primeuix/themes/types/togglebutt
                 checkedBorderColor: "transparent"
             },
             content: {
-                checkedBackground: "{button.primary.background}"
+                checkedBackground: "{primary.color}"
             }
         }
     }

@@ -77,7 +77,7 @@ export default {
                 checkedBorderColor: "transparent"
             },
             content: {
-                checkedBackground: "{button.primary.background}"
+                checkedBackground: "{primary.color}"
             }
         }
     }
