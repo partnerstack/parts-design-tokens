@@ -6,7 +6,7 @@ export default {
     },
     sm: {
         height: "16px",
-        fontSize: "10px",
+        fontSize: "12px",
         minWidth: "16px"
     },
     xl: {
@@ -20,7 +20,7 @@ export default {
     root: {
         height: "20px",
         padding: "0 8px",
-        fontSize: "10px",
+        fontSize: "12px",
         minWidth: "20px",
         fontWeight: "700",
         borderRadius: "{border.radius.md}"
