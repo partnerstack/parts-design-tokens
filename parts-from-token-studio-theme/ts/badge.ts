@@ -2,28 +2,28 @@ import type { BadgeDesignTokens } from '@primeuix/themes/types/badge';
 
  export default {
     lg: {
-        height: "1.75rem",
-        fontSize: "0.875rem",
-        minWidth: "1.75rem"
+        height: "24px",
+        fontSize: "12px",
+        minWidth: "24px"
     },
     sm: {
-        height: "1.25rem",
-        fontSize: "0.625rem",
-        minWidth: "1.25rem"
+        height: "16px",
+        fontSize: "10px",
+        minWidth: "16px"
     },
     xl: {
-        height: "2rem",
-        fontSize: "1rem",
-        minWidth: "2rem"
+        height: "28px",
+        fontSize: "14px",
+        minWidth: "28px"
     },
     dot: {
-        size: "0.5rem"
+        size: "8px"
     },
     root: {
-        height: "1.5rem",
-        padding: "0 0.5rem",
-        fontSize: "0.75rem",
-        minWidth: "1.5rem",
+        height: "20px",
+        padding: "0 8px",
+        fontSize: "10px",
+        minWidth: "20px",
         fontWeight: "700",
         borderRadius: "{border.radius.md}"
     },
