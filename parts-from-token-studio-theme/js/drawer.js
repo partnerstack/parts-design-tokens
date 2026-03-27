@@ -6,7 +6,7 @@ export default {
         borderColor: "{overlay.modal.border.color}"
     },
     title: {
-        fontSize: "1.5rem",
+        fontSize: "16px",
         fontWeight: "600"
     },
     footer: {
