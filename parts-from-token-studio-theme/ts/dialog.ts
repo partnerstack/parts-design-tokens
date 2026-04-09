@@ -9,7 +9,7 @@ import type { DialogDesignTokens } from '@primeuix/themes/types/dialog';
         borderRadius: "{overlay.modal.border.radius}"
     },
     title: {
-        fontSize: "1.25rem",
+        fontSize: "16px",
         fontWeight: "600"
     },
     footer: {
