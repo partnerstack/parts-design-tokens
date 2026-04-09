@@ -16,7 +16,7 @@ export default {
         hoverColor: "{primary.hover.color}",
         activeColor: "{primary.color}",
         borderColor: "{content.border.color}",
-        borderWidth: "1px",
+        borderWidth: "0 0 1px 0",
         hoverBackground: "transparent",
         activeBackground: "transparent",
         hoverBorderColor: "{content.border.color}",
@@ -28,7 +28,7 @@ export default {
     tablist: {
         background: "transparent",
         borderColor: "{content.border.color}",
-        borderWidth: "1px"
+        borderWidth: "0 0 1px 0"
     },
     tabpanel: {
         color: "{content.color}",
