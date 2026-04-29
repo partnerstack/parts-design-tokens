@@ -352,7 +352,7 @@ export default {
     },
     iconSize: "1rem",
     focusRing: {
-        color: "{primary.color}",
+        color: "{primary.color.700}",
         style: "solid",
         width: "1px",
         offset: "2px",
@@ -533,7 +533,7 @@ export default {
                         focusColor: "{surface.500}"
                     },
                     color: "{text.color}",
-                    focusColor: "{text.color}",
+                    focusColor: "{text.hover.color}",
                     selectedColor: "{surface.0}",
                     focusBackground: "{primary.100}",
                     selectedBackground: "{primary.500}",
@@ -552,15 +552,15 @@ export default {
             text: {
                 color: "{surface.900}",
                 hoverColor: "{surface.950}",
-                mutedColor: "{neutral.500}",
-                hoverMutedColor: "{neutral.600}"
+                mutedColor: "{surface.500}",
+                hoverMutedColor: "{surface.600}"
             },
             content: {
                 color: "{text.color}",
                 background: "{surface.0}",
                 hoverColor: "{text.hover.color}",
                 borderColor: "{surface.200}",
-                hoverBackground: "{surface.100}"
+                hoverBackground: "{primary.50}"
             },
             overlay: {
                 modal: {
@@ -614,8 +614,8 @@ export default {
                 disabledBackground: "{surface.100}",
                 invalidBorderColor: "{red.400}",
                 floatLabelFocusColor: "{primary.600}",
-                filledFocusBackground: "{surface.50}",
-                filledHoverBackground: "{surface.50}",
+                filledFocusBackground: "{surface.0}",
+                filledHoverBackground: "{surface.0}",
                 floatLabelActiveColor: "{surface.500}",
                 floatLabelInvalidColor: "{form.field.invalid.placeholder.color}",
                 invalidPlaceholderColor: "{red.600}"

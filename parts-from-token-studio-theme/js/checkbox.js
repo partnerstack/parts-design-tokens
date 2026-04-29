@@ -6,7 +6,7 @@ export default {
         sm: {
             size: "0.75rem"
         },
-        size: "0.75rem",
+        size: "0.875rem",
         color: "{form.field.color}",
         checkedColor: "{primary.contrast.color}",
         disabledColor: "{form.field.disabled.color}",

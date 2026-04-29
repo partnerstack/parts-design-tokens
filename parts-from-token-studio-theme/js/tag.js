@@ -67,7 +67,7 @@ export default {
                 background: "{surface.950}"
             },
             secondary: {
-                color: "{text.color}",
+                color: "{surface.600}",
                 background: "{surface.100}"
             }
         }

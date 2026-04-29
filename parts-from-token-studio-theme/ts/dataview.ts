@@ -12,7 +12,7 @@ import type { DataViewDesignTokens } from '@primeuix/themes/types/dataview';
         padding: "0.75rem 1rem",
         background: "{content.background}",
         borderColor: "{content.border.color}",
-        borderWidth: "1px",
+        borderWidth: "1px 0 0 0",
         borderRadius: "0"
     },
     header: {
@@ -20,7 +20,7 @@ import type { DataViewDesignTokens } from '@primeuix/themes/types/dataview';
         padding: "0.75rem 1rem",
         background: "{content.background}",
         borderColor: "{content.border.color}",
-        borderWidth: "1px",
+        borderWidth: "0 0 1px 0",
         borderRadius: "0"
     },
     content: {
@@ -33,10 +33,10 @@ import type { DataViewDesignTokens } from '@primeuix/themes/types/dataview';
     },
     paginatorTop: {
         borderColor: "{content.border.color}",
-        borderWidth: "1px"
+        borderWidth: "0 0 1px 0"
     },
     paginatorBottom: {
         borderColor: "{content.border.color}",
-        borderWidth: "1px"
+        borderWidth: "1px 0 0 0"
     }
 } satisfies DataViewDesignTokens;

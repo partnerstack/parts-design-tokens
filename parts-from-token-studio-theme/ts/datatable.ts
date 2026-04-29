@@ -70,7 +70,7 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
         padding: "0.75rem 1rem",
         background: "{content.background}",
         borderColor: "{datatable.border.color}",
-        borderWidth: "1px"
+        borderWidth: "0 0 1px 0"
     },
     header: {
         lg: {
@@ -81,9 +81,9 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
         },
         color: "{content.color}",
         padding: "0.75rem 1rem",
-        background: "{surface.50}",
+        background: "{content.background}",
         borderColor: "{datatable.border.color}",
-        borderWidth: "1px"
+        borderWidth: "0 0 1px 0"
     },
     bodyCell: {
         lg: {
@@ -137,7 +137,7 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
         borderColor: "{datatable.border.color}",
         selectedColor: "{highlight.color}",
         hoverBackground: "{surface.200}",
-        selectedBackground: "{primary.100}"
+        selectedBackground: "{surface.200}"
     },
     colorScheme: {
         dark: {
@@ -174,14 +174,14 @@ import type { DataTableDesignTokens } from '@primeuix/themes/types/datatable';
     },
     paginatorTop: {
         borderColor: "{datatable.border.color}",
-        borderWidth: "1px"
+        borderWidth: "0 0 1px 0"
     },
     columnResizer: {
         width: "0.5rem"
     },
     paginatorBottom: {
         borderColor: "{datatable.border.color}",
-        borderWidth: "1px"
+        borderWidth: "0 0 1px 0"
     },
     resizeIndicator: {
         color: "{primary.color}",

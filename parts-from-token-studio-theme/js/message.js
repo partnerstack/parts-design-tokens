@@ -66,7 +66,7 @@ export default {
         dark: {
             info: {
                 color: "{blue.500}",
-                shadow: "0 4px 8px 0 rgba(2, 5, 10, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {blue.500}, transparent 96%)",
                 simple: {
                     color: "{blue.500}"
                 },
@@ -86,7 +86,7 @@ export default {
             },
             warn: {
                 color: "{yellow.500}",
-                shadow: "0 4px 8px 0 rgba(9, 7, 0, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {yellow.500}, transparent 96%)",
                 simple: {
                     color: "{yellow.500}"
                 },
@@ -106,7 +106,7 @@ export default {
             },
             error: {
                 color: "{red.500}",
-                shadow: "0 4px 8px 0 rgba(10, 3, 3, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {red.500}, transparent 96%)",
                 simple: {
                     color: "{red.500}"
                 },
@@ -126,7 +126,7 @@ export default {
             },
             success: {
                 color: "{green.500}",
-                shadow: "0 4px 8px 0 rgba(1, 8, 4, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {green.500}, transparent 96%)",
                 simple: {
                     color: "{green.500}"
                 },
@@ -146,7 +146,7 @@ export default {
             },
             contrast: {
                 color: "{surface.950}",
-                shadow: "0 4px 8px 0 rgba(0, 0, 1, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {surface.950}, transparent 96%)",
                 simple: {
                     color: "{surface.0}"
                 },
@@ -166,7 +166,7 @@ export default {
             },
             secondary: {
                 color: "{surface.300}",
-                shadow: "0 4px 8px 0 rgba(4, 5, 6, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {surface.500}, transparent 96%)",
                 simple: {
                     color: "{surface.400}"
                 },
@@ -188,7 +188,7 @@ export default {
         light: {
             info: {
                 color: "{primary.600}",
-                shadow: "0 4px 8px 0 rgba(2, 5, 10, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {primary.500}, transparent 96%)",
                 simple: {
                     color: "{primary.600}"
                 },
@@ -208,7 +208,7 @@ export default {
             },
             warn: {
                 color: "{yellow.600}",
-                shadow: "0 4px 8px 0 rgba(9, 7, 0, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {yellow.500}, transparent 96%)",
                 simple: {
                     color: "{yellow.600}"
                 },
@@ -228,7 +228,7 @@ export default {
             },
             error: {
                 color: "{red.600}",
-                shadow: "0 4px 8px 0 rgba(10, 3, 3, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {red.500}, transparent 96%)",
                 simple: {
                     color: "{red.600}"
                 },
@@ -248,7 +248,7 @@ export default {
             },
             success: {
                 color: "{green.600}",
-                shadow: "0 4px 8px 0 rgba(1, 8, 4, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {green.500}, transparent 96%)",
                 simple: {
                     color: "{green.600}"
                 },
@@ -268,7 +268,7 @@ export default {
             },
             contrast: {
                 color: "{surface.50}",
-                shadow: "0 4px 8px 0 rgba(0, 0, 1, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {surface.950}, transparent 96%)",
                 simple: {
                     color: "{surface.950}"
                 },
@@ -288,7 +288,7 @@ export default {
             },
             secondary: {
                 color: "{text.muted.color}",
-                shadow: "0 4px 8px 0 rgba(4, 5, 6, 0.04)",
+                shadow: "0 4px 8px 0 color-mix(in srgb, {surface.500}, transparent 96%)",
                 simple: {
                     color: "{text.muted.color}"
                 },

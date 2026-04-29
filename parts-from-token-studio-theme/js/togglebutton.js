@@ -37,7 +37,7 @@ export default {
         },
         padding: "8px 16px",
         borderRadius: "{content.border.radius}",
-        checkedShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.02),0 1px 2px 0 rgba(0, 0, 0, 0.04)"
+        checkedShadow: "0 0 0 0 #00000000"
     },
     colorScheme: {
         dark: {
