@@ -299,7 +299,7 @@ export default {
     list: {
         gap: "8px",
         header: {
-            padding: "16px 20px 0px 20px"
+            padding: "16px 16px 0px 16px"
         },
         option: {
             padding: "8px 12px",
