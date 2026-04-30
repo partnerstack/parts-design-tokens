@@ -21,6 +21,7 @@ export default {
     colorScheme: {
         dark: {
             strength: {
+                weakBackground: "{red.400}",
                 mediumBackground: "{amber.400}",
                 strongBackground: "{green.400}"
             }
