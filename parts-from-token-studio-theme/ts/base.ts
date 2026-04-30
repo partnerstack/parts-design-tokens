@@ -297,7 +297,7 @@ export default {
 },
     semantic: {
     list: {
-        gap: "8px",
+        gap: "2px",
         header: {
             padding: "16px 16px 0px 16px"
         },
