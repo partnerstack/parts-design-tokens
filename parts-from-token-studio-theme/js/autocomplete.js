@@ -28,7 +28,7 @@ export default {
         placeholderColor: "{form.field.placeholder.color}",
         disabledBackground: "{form.field.disabled.background}",
         invalidBorderColor: "{form.field.invalid.border.color}",
-        transitionDuration: "{transition.duration}",
+        transitionDuration: "{form.field.transition.duration}",
         filledFocusBackground: "{form.field.filled.focus.background}",
         filledHoverBackground: "{form.field.filled.hover.background}",
         invalidPlaceholderColor: "{form.field.invalid.placeholder.color}"

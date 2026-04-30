@@ -13,7 +13,7 @@ export default {
         },
         background: "transparent",
         fontWeight: "600",
-        hoverColor: "{primary.hover.color}",
+        hoverColor: "{text.color}",
         activeColor: "{primary.color}",
         borderColor: "{content.border.color}",
         borderWidth: "0 0 1px 0",
@@ -38,9 +38,9 @@ export default {
             style: "{focus.ring.style}",
             width: "{focus.ring.width}",
             offset: "{focus.ring.offset}",
-            shadow: "{focus.ring.shadow}"
+            shadow: "inset {focus.ring.shadow}"
         },
-        background: "{content.background}"
+        background: "transparent"
     },
     activeBar: {
         bottom: "-1px",
@@ -63,7 +63,7 @@ export default {
     colorScheme: {
         dark: {
             navButton: {
-                shadow: "0 0 10px 50px #0F172A80"
+                shadow: "0 0 10px 50px color-mix(in srgb, {content.background}, transparent 50%)"
             }
         },
         light: {

@@ -1,12 +1,12 @@
 export default {
     root: {
         lg: {
-            fontSize: "1px rem",
+            fontSize: "{form.field.lg.font.size}",
             paddingX: "{form.field.lg.padding.x}",
             paddingY: "{form.field.lg.padding.y}"
         },
         sm: {
-            fontSize: "0.875rem",
+            fontSize: "{form.field.sm.font.size}",
             paddingX: "{form.field.sm.padding.x}",
             paddingY: "{form.field.sm.padding.y}"
         },

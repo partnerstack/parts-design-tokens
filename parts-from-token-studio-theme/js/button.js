@@ -306,7 +306,7 @@ export default {
                         color: "{orange.500}",
                         shadow: "0 0 0 0 #00000000"
                     },
-                    background: "{orange.800}",
+                    background: "{orange.500}",
                     hoverColor: "#ffffff",
                     activeColor: "#ffffff",
                     borderColor: "{orange.500}",

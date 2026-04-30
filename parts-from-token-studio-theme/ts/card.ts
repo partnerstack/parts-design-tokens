@@ -3,7 +3,7 @@ import type { CardDesignTokens } from '@primeuix/themes/types/card';
  export default {
     body: {
         gap: "0.5rem",
-        padding: "1.5rem"
+        padding: "24px"
     },
     root: {
         color: "{content.color}",

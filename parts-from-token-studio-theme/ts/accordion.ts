@@ -41,6 +41,7 @@ import type { AccordionDesignTokens } from '@primeuix/themes/types/accordion';
         borderRadius: "0",
         hoverBackground: "transparent",
         activeBackground: "transparent",
+        activeHoverColor: "{primary.hover.color}",
         activeHoverBackground: "transparent"
     },
     content: {
