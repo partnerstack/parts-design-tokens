@@ -388,7 +388,7 @@ export default {
                 borderRadius: "{border.radius.sm}"
             },
             list: {
-                gap: "8px",
+                gap: "4px",
                 padding: "8px"
             },
             submenuIcon: {
