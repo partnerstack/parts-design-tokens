@@ -3,15 +3,15 @@ import type { ButtonDesignTokens } from '@primeuix/themes/types/button';
  export default {
     root: {
         lg: {
-            fontSize: "1.125rem",
-            paddingX: "0.875rem",
-            paddingY: "0.625rem",
+            fontSize: "{form.field.lg.font.size}",
+            paddingX: "{form.field.lg.padding.x}",
+            paddingY: "{form.field.lg.padding.y}",
             iconOnlyWidth: "3rem"
         },
         sm: {
-            fontSize: "0.75rem",
-            paddingX: "0.625rem",
-            paddingY: "0.375rem",
+            fontSize: "{form.field.sm.font.size}",
+            paddingX: "{form.field.sm.padding.x}",
+            paddingY: "{form.field.sm.padding.y}",
             iconOnlyWidth: "2rem"
         },
         gap: "0.5rem",
