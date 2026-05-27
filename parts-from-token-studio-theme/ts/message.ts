@@ -198,7 +198,7 @@ import type { MessageDesignTokens } from '@primeuix/themes/types/message';
                     color: "{primary.600}",
                     borderColor: "{primary.600}"
                 },
-                background: "{primary.75}",
+                background: "{primary.50}",
                 borderColor: "{primary.200}",
                 closeButton: {
                     focusRing: {
