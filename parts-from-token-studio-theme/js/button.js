@@ -385,8 +385,8 @@ export default {
                     hoverColor: "{surface.700}",
                     activeColor: "{surface.700}",
                     borderColor: "{surface.300}",
-                    hoverBackground: "{surface.100}",
-                    activeBackground: "{surface.200}",
+                    hoverBackground: "{surface.50}",
+                    activeBackground: "{surface.100}",
                     hoverBorderColor: "{surface.300}",
                     activeBorderColor: "{surface.300}"
                 }
@@ -420,7 +420,7 @@ export default {
                 primary: {
                     color: "{primary.color}",
                     hoverBackground: "{primary.50}",
-                    activeBackground: "{primary.100}"
+                    activeBackground: "{primary.75}"
                 },
                 success: {
                     color: "{green.500}",
@@ -460,8 +460,8 @@ export default {
                 plain: {
                     color: "{surface.700}",
                     borderColor: "{surface.300}",
-                    hoverBackground: "{surface.100}",
-                    activeBackground: "{surface.200}"
+                    hoverBackground: "{surface.50}",
+                    activeBackground: "{surface.100}"
                 },
                 danger: {
                     color: "{red.500}",
@@ -473,7 +473,7 @@ export default {
                     color: "{primary.color}",
                     borderColor: "{primary.200}",
                     hoverBackground: "{primary.50}",
-                    activeBackground: "{primary.100}"
+                    activeBackground: "{primary.75}"
                 },
                 success: {
                     color: "{green.500}",
@@ -490,8 +490,8 @@ export default {
                 secondary: {
                     color: "{surface.700}",
                     borderColor: "{surface.300}",
-                    hoverBackground: "{surface.100}",
-                    activeBackground: "{surface.200}"
+                    hoverBackground: "{surface.50}",
+                    activeBackground: "{surface.100}"
                 }
             }
         }
