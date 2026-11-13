@@ -580,9 +580,9 @@ export default {
                 }
             },
             primary: {
-                color: "{primary.500}",
-                hoverColor: "{primary.600}",
-                activeColor: "{primary.700}",
+                color: "{primary.600}",
+                hoverColor: "{primary.700}",
+                activeColor: "{primary.800}",
                 contrastColor: "#ffffff"
             },
             surface: {
